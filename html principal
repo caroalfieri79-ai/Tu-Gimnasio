@@ -1,1 +1,673 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rutina de Entrenamiento - Guía de Ejercicios</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0d0d1a;
+      font-family: 'Montserrat', sans-serif;
+      color: #f0f0f0;
+      min-height: 100vh;
+    }
+
+    /* ─── HEADER ──────────────────────────────────────── */
+    .header {
+      background: linear-gradient(135deg, #0d0d1a 0%, #1a1a35 100%);
+      border-bottom: 3px solid #ff6b00;
+      padding: 28px 40px 20px;
+      text-align: center;
+      position: relative;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #ff6b00, #ff9f00, #ff6b00);
+    }
+    .gym-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 13px;
+      letter-spacing: 6px;
+      color: #ff6b00;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .header h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(32px, 5vw, 54px);
+      letter-spacing: 4px;
+      color: #ffffff;
+      line-height: 1;
+    }
+    .header h1 span { color: #ff6b00; }
+    .header-sub {
+      font-size: 12px;
+      color: #aaa;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-top: 8px;
+    }
+
+    /* ─── MAIN CONTAINER ──────────────────────────────── */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 30px 20px 50px;
+    }
+
+    /* ─── SECTION TITLE ───────────────────────────────── */
+    .section-block {
+      margin-bottom: 10px;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 22px;
+      border-radius: 8px 8px 0 0;
+      margin-bottom: 0;
+    }
+    .section-title .icon { font-size: 22px; }
+    .section-title h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 3px;
+      color: #fff;
+    }
+    .section-title .line {
+      flex: 1;
+      height: 2px;
+      opacity: 0.4;
+      border-radius: 2px;
+    }
+
+    .sec-upper .section-title { background: rgba(255,107,0,0.15); border-left: 4px solid #ff6b00; }
+    .sec-upper .section-title .line { background: #ff6b00; }
+    .sec-lower .section-title { background: rgba(0,200,150,0.12); border-left: 4px solid #00c896; }
+    .sec-lower .section-title .line { background: #00c896; }
+    .sec-core .section-title { background: rgba(220,50,100,0.12); border-left: 4px solid #dc3264; }
+    .sec-core .section-title .line { background: #dc3264; }
+
+    /* ─── EXERCISE CARD ───────────────────────────────── */
+    .exercise-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      overflow: hidden;
+      margin-bottom: 28px;
+    }
+
+    .exercise-card {
+      display: grid;
+      grid-template-columns: 130px 1fr auto;
+      align-items: center;
+      background: #141428;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      min-height: 110px;
+      transition: background 0.2s;
+    }
+    .exercise-card:last-child { border-bottom: none; }
+    .exercise-card:hover { background: #1c1c36; }
+
+    /* image cell */
+    .ex-img {
+      width: 130px;
+      height: 110px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      flex-shrink: 0;
+    }
+    .ex-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* content cell */
+    .ex-content {
+      padding: 14px 18px;
+      flex: 1;
+    }
+    .ex-num {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+    .ex-name {
+      font-size: 15px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+    .ex-desc {
+      font-size: 11.5px;
+      color: #bbb;
+      line-height: 1.5;
+    }
+
+    /* reps cell */
+    .ex-reps {
+      padding: 14px 16px;
+      text-align: center;
+      flex-shrink: 0;
+      min-width: 80px;
+    }
+    .reps-label {
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 4px;
+    }
+    .reps-value {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      letter-spacing: 1px;
+      line-height: 1.1;
+    }
+
+    /* color themes */
+    .sec-upper .ex-num { color: #ff6b00; }
+    .sec-upper .reps-value { color: #ff6b00; }
+    .sec-upper .ex-img { border-right: 3px solid #ff6b00; }
+
+    .sec-lower .ex-num { color: #00c896; }
+    .sec-lower .reps-value { color: #00c896; }
+    .sec-lower .ex-img { border-right: 3px solid #00c896; }
+
+    .sec-core .ex-num { color: #dc3264; }
+    .sec-core .reps-value { color: #dc3264; }
+    .sec-core .ex-img { border-right: 3px solid #dc3264; }
+
+    /* ─── FOOTER ──────────────────────────────────────── */
+    .footer {
+      background: #0d0d1a;
+      border-top: 2px solid #1e1e3a;
+      padding: 24px 40px;
+      text-align: center;
+    }
+    .tips-row {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .tip-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #bbb;
+    }
+    .tip-icon { font-size: 18px; }
+    .footer-copy {
+      font-size: 10px;
+      color: #555;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .footer-copy span { color: #ff6b00; }
+
+    /* ─── RESPONSIVE ──────────────────────────────────── */
+    @media (max-width: 600px) {
+      .exercise-card {
+        grid-template-columns: 90px 1fr;
+        grid-template-rows: auto auto;
+      }
+      .ex-img {
+        width: 90px;
+        height: 90px;
+        grid-row: 1 / 3;
+      }
+      .ex-reps {
+        grid-column: 2;
+        text-align: left;
+        padding-top: 0;
+        padding-left: 18px;
+      }
+      .tips-row { gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════ HEADER ══════════ -->
+<header class="header">
+  <div class="gym-logo">💪 Tu Gimnasio · Entrenamiento Funcional</div>
+  <h1>GUÍA DE <span>EJERCICIOS</span></h1>
+  <div class="header-sub">Rutina Completa · Fuerza · Glúteos · Core</div>
+</header>
+
+<div class="container">
+
+  <!-- ══════════ TREN SUPERIOR ══════════ -->
+  <div class="section-block sec-upper">
+    <div class="section-title">
+      <span class="icon">💪</span>
+      <h2>TREN SUPERIOR</h2>
+      <div class="line"></div>
+    </div>
+    <div class="exercise-list">
+
+      <!-- 1 -->
+      <div class="exercise-card">
+        <div class="ex-img">
+          <img src="images/shoulder-press.gif" alt="Press de hombros sentado" loading="lazy">
+        </div>
+        <div class="ex-content">
+          <div class="ex-num">Ejercicio 01</div>
+          <div class="ex-name">Press de hombros sentado</div>
+          <div class="ex-desc">Sentada recta, mancuernas a la altura de hombros, empuja hacia arriba y baja controlado.</div>
+        </div>
+        <div class="ex-reps">
+          <div class="reps-label">Series × Reps</div>
+          <div class="reps-value">3 × 12</div>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="exercise-card">
+        <div class="ex-img">
+          <img src="images/bicep-curl.gif" alt="Curl de bíceps alternado" loading="lazy">
+        </div>
+        <div class="ex-content">
+          <div class="ex-num">Ejercicio 02</div>
+          <div class="ex-name">Curl de bíceps alternado</div>
+          <div class="ex-desc">De pie, brazos pegados al cuerpo, flexiona un codo llevando mancuerna al hombro, alterna brazos.</div>
+        </div>
+        <div class="ex-reps">
+          <div class="reps-label">Series × Reps</div>
+          <div class="reps-value">3 × 12</div>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="exercise-card">
+        <div class="ex-img">
+          <img src="images/chest-press.gif" alt="Press de pecho en colchoneta" loading="lazy">
+        </div>
+        <div class="ex-content">
+          <div class="ex-num">Ejercicio 03</div>
+          <div class="ex-name">Press de pecho en colchoneta</div>
+          <div class="ex-desc">Acostada boca arriba, mancuernas sobre el pecho, empuja hacia arriba y baja despacio.</div>
+        </div>
+        <div class="ex-reps">
+          <div class="reps-label">Series × Reps</div>
+          <div class="reps-value">3 × 12</div>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="exercise-card">
+        <div class="ex-img">
+          <img src="images/chest-fly.gif" alt="Aperturas de pecho (flyes)" loading="lazy">
+        </div>
+        <div class="ex-content">
+          <div class="ex-num">Ejercicio 04</div>
+          <div class="ex-name">Aperturas de pecho (Flyes)</div>
+          <div class="ex-desc">Acostada, brazos abiertos con mancuernas, junta al centro y vuelve a abrir.</div>
+        </div>
+        <div class="ex-reps">
+          <div class="reps-label">Series × Reps</div>
+          <div class="reps-value">3 × 12</div>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="exercise-card">
+        <div class="ex-img">
+          <img src="images/bent-over-row.gif" alt="Remo inclinado" loading="lazy">
+        </div>
+        <div class="ex-content">
+          <div class="ex-num">Ejercicio 05</div>
+          <div class="ex-name">Remo inclinado</div>
+          <div class="ex-desc">Tronco inclinado, espalda recta, lleva mancuernas al abdomen y baja lento.</div>
+        </div>
+        <div class="ex-reps">
+          <div class="reps-label">Series × Reps</div>
+          <div class="reps-value">3 × 12</div>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="exercise-card">
+        <div class="ex-img">
+          <img src="images/incline-push-up.gif" alt="Flexiones inclinadas en silla" loading="lazy">
+        </div>
+        <div class="ex-content">
+          <div class="ex-num">Ejercicio 06</div>
+          <div class="ex-name">Flexiones inclinadas en silla</div>
+          <div class="ex-desc">Manos en el borde de la silla, cuerpo recto, baja el pecho y sube.</div>
+        </div>
+        <div class="ex-reps">
+          <div class="reps-label">Series × Reps</div>
+          <div class="reps-value">3 × 10–12</div>
+        </div>
+      </div>
+
+    </div><!-- /exercise-list -->
+  </div><!-- /sec-upper -->
+
+
+  <!-- ══════════ TREN INFERIOR ══════════ -->
+  <div class="section-block sec-lower">
+    <div class="section-title">
+      <span class="icon">🦵</span>
+      <h2>TREN INFERIOR</h2>
+      <div class="line"></div>
+    </div>
+    <div class="exercise-list">
+
+      <!-- 7 -->
+      <div class="exercise-card">
+        <div class="ex-img">
+          <img src="images/dumbbell-squat.gif" alt="Sentadillas con mancuernas" loading="lazy">
+        </div>
+        <div class="ex-content">
+          <div class="ex-num">Ejercicio 07</div>
+          <div class="ex-name">Sentadillas con mancuernas</div>
+          <div class="ex-desc">De pie, pies al ancho de hombros, baja flexionando rodillas hasta 90°, sube apretando glúteos.</div>
+        </div>
+        <div class="ex-reps">
+          <div class="reps-label">Series × Reps</div>
+          <div class="reps-value">3 × 15</div>
+        </div>
+      </div>
+
+      <!-- 8 -->
+      <div class="exercise-card">
+        <div class="ex-img">
+          <img src="images/dumbbell-lunge.gif" alt="Zancadas alternadas" loading="lazy">
+        </div>
+        <div class="ex-content">
+          <div class="ex-num">Ejercicio 08</div>
+          <div class="ex-name">Zancadas alternadas</div>
+          <div class="ex-desc">Paso largo adelante, baja hasta que rodilla trasera casi toque el suelo, cambia pierna.</div>
+        </div>
+        <div class="ex-reps">
+          <div class="reps-label">Series × Reps</div>
+          <div class="reps-value">3 × 12<br><small style="font-size:11px;font-family:Montserrat">por pierna</small></div>
+        </div>
+      </div>
+
+      <!-- 9 -->
+      <div class="exercise-card">
+        <div class="ex-img">
+          <img src="images/glute-bridge.gif" alt="Puente de glúteos clásico" loading="lazy">
+        </div>
+        <div class="ex-content">
+          <div class="ex-num">Ejercicio 09</div>
+          <div class="ex-name">Puente de glúteos clásico</div>
+          <div class="ex-desc">Acostada boca arriba, pies apoyados, eleva cadera apretando glúteos.</div>
+        </div>
+        <div class="ex-reps">
+          <div class="reps-label">Series × Reps</div>
+          <div class="reps-value">3 × 15</div>
+        </div>
+      </div>
+
+      <!-- 10 -->
+      <div class="exercise-card">
+        <div class="ex-img">
+          <img src="images/single-leg-bridge.gif" alt="Puente de glúteos a una pierna" loading="lazy">
+        </div>
+        <div class="ex-content">
+          <div class="ex-num">Ejercicio 10</div>
+          <div class="ex-name">Puente de glúteos a una pierna</div>
+          <div class="ex-desc">Igual que el anterior, pero con una pierna extendida.</div>
+        </div>
+        <div class="ex-reps">
+          <div class="reps-label">Series × Reps</div>
+          <div class="reps-value">3 × 12<br><small style="font-size:11px;font-family:Montserrat">por pierna</small></div>
+        </div>
+      </div>
+
+      <!-- 11 -->
+      <div class="exercise-card">
+        <div class="ex-img">
+          <img src="images/hip-thrust.gif" alt="Hip thrust en silla" loading="lazy">
+        </div>
+        <div class="ex-content">
+          <div class="ex-num">Ejercicio 11</div>
+          <div class="ex-name">Hip thrust en silla</div>
+          <div class="ex-desc">Espalda apoyada en silla, pies firmes, eleva cadera con fuerza.</div>
+        </div>
+        <div class="ex-reps">
+          <div class="reps-label">Series × Reps</div>
+          <div class="reps-value">3 × 12</div>
+        </div>
+      </div>
+
+      <!-- 12 -->
+      <div class="exercise-card">
+        <div class="ex-img">
+          <img src="images/donkey-kicks.gif" alt="Patada de glúteo en cuatro apoyos" loading="lazy">
+        </div>
+        <div class="ex-content">
+          <div class="ex-num">Ejercicio 12</div>
+          <div class="ex-name">Patada de glúteo en cuatro apoyos</div>
+          <div class="ex-desc">En colchoneta, manos y rodillas apoyadas, eleva una pierna hacia atrás y arriba.</div>
+        </div>
+        <div class="ex-reps">
+          <div class="reps-label">Series × Reps</div>
+          <div class="reps-value">3 × 12<br><small style="font-size:11px;font-family:Montserrat">por pierna</small></div>
+        </div>
+      </div>
+
+      <!-- 13 -->
+      <div class="exercise-card">
+        <div class="ex-img">
+          <img src="images/side-lying-hip-abduction2.gif" alt="Abducción de cadera acostada de lado" loading="lazy">
+        </div>
+        <div class="ex-content">
+          <div class="ex-num">Ejercicio 13</div>
+          <div class="ex-name">Abducción de cadera acostada de lado</div>
+          <div class="ex-desc">Acostada de lado, eleva la pierna superior recta hacia arriba.</div>
+        </div>
+        <div class="ex-reps">
+          <div class="reps-label">Series × Reps</div>
+          <div class="reps-value">3 × 12<br><small style="font-size:11px;font-family:Montserrat">por pierna</small></div>
+        </div>
+      </div>
+
+      <!-- 14 -->
+      <div class="exercise-card">
+        <div class="ex-img">
+          <img src="images/calf-raise.gif" alt="Elevación de talones (gemelos)" loading="lazy">
+        </div>
+        <div class="ex-content">
+          <div class="ex-num">Ejercicio 14</div>
+          <div class="ex-name">Elevación de talones (gemelos)</div>
+          <div class="ex-desc">De pie, mancuernas en manos, sube sobre puntas de pies y baja despacio.</div>
+        </div>
+        <div class="ex-reps">
+          <div class="reps-label">Series × Reps</div>
+          <div class="reps-value">3 × 15</div>
+        </div>
+      </div>
+
+    </div><!-- /exercise-list -->
+  </div><!-- /sec-lower -->
+
+
+  <!-- ══════════ CORE Y ABDOMEN ══════════ -->
+  <div class="section-block sec-core">
+    <div class="section-title">
+      <span class="icon">🔥</span>
+      <h2>CORE Y ABDOMEN</h2>
+      <div class="line"></div>
+    </div>
+    <div class="exercise-list">
+
+      <!-- 15 -->
+      <div class="exercise-card">
+        <div class="ex-img">
+          <img src="images/crunch.gif" alt="Crunch abdominal corto" loading="lazy">
+        </div>
+        <div class="ex-content">
+          <div class="ex-num">Ejercicio 15</div>
+          <div class="ex-name">Crunch abdominal corto</div>
+          <div class="ex-desc">Acostada boca arriba, manos detrás de la cabeza, eleva parte superior del torso.</div>
+        </div>
+        <div class="ex-reps">
+          <div class="reps-label">Series × Reps</div>
+          <div class="reps-value">3 × 15</div>
+        </div>
+      </div>
+
+      <!-- 16 -->
+      <div class="exercise-card">
+        <div class="ex-img">
+          <img src="images/leg-raise.gif" alt="Elevación de piernas" loading="lazy">
+        </div>
+        <div class="ex-content">
+          <div class="ex-num">Ejercicio 16</div>
+          <div class="ex-name">Elevación de piernas</div>
+          <div class="ex-desc">Acostada boca arriba, eleva piernas rectas hasta 90°, baja sin tocar el suelo.</div>
+        </div>
+        <div class="ex-reps">
+          <div class="reps-label">Series × Reps</div>
+          <div class="reps-value">3 × 12</div>
+        </div>
+      </div>
+
+      <!-- 17 -->
+      <div class="exercise-card">
+        <div class="ex-img">
+          <img src="images/russian-twist.gif" alt="Russian twist con mancuerna" loading="lazy">
+        </div>
+        <div class="ex-content">
+          <div class="ex-num">Ejercicio 17</div>
+          <div class="ex-name">Russian twist con mancuerna</div>
+          <div class="ex-desc">Sentada, pies elevados o apoyados, gira torso llevando mancuerna de lado a lado.</div>
+        </div>
+        <div class="ex-reps">
+          <div class="reps-label">Series × Reps</div>
+          <div class="reps-value">3 × 20<br><small style="font-size:11px;font-family:Montserrat">10 por lado</small></div>
+        </div>
+      </div>
+
+      <!-- 18 -->
+      <div class="exercise-card">
+        <div class="ex-img">
+          <img src="images/plank.gif" alt="Plancha frontal" loading="lazy">
+        </div>
+        <div class="ex-content">
+          <div class="ex-num">Ejercicio 18</div>
+          <div class="ex-name">Plancha frontal</div>
+          <div class="ex-desc">Antebrazos y puntas de pies apoyados, cuerpo recto, mantén posición.</div>
+        </div>
+        <div class="ex-reps">
+          <div class="reps-label">Series × Tiempo</div>
+          <div class="reps-value">3 × 30"</div>
+        </div>
+      </div>
+
+      <!-- 19 -->
+      <div class="exercise-card">
+        <div class="ex-img">
+          <img src="images/side-plank.gif" alt="Plancha lateral" loading="lazy">
+        </div>
+        <div class="ex-content">
+          <div class="ex-num">Ejercicio 19</div>
+          <div class="ex-name">Plancha lateral</div>
+          <div class="ex-desc">Apoya un antebrazo y pies, cuerpo alineado, mantén postura.</div>
+        </div>
+        <div class="ex-reps">
+          <div class="reps-label">Series × Tiempo</div>
+          <div class="reps-value">3 × 30"<br><small style="font-size:11px;font-family:Montserrat">por lado</small></div>
+        </div>
+      </div>
+
+      <!-- 20 -->
+      <div class="exercise-card">
+        <div class="ex-img">
+          <img src="images/superman.gif" alt="Superman (espinales)" loading="lazy">
+        </div>
+        <div class="ex-content">
+          <div class="ex-num">Ejercicio 20</div>
+          <div class="ex-name">Superman (espinales)</div>
+          <div class="ex-desc">Boca abajo, brazos extendidos, eleva simultáneamente brazos y piernas.</div>
+        </div>
+        <div class="ex-reps">
+          <div class="reps-label">Series × Reps</div>
+          <div class="reps-value">3 × 15</div>
+        </div>
+      </div>
+
+    </div><!-- /exercise-list -->
+  </div><!-- /sec-core -->
+
+</div><!-- /container -->
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer class="footer">
+  <div class="tips-row">
+    <div class="tip-item"><span class="tip-icon">💧</span><span>Hidratación constante durante el entreno</span></div>
+    <div class="tip-item"><span class="tip-icon">⏱️</span><span>Descanso 45–60 seg entre series</span></div>
+    <div class="tip-item"><span class="tip-icon">🔁</span><span>Calentamiento 5 min antes de empezar</span></div>
+  </div>
+  <div class="footer-copy">© <span>Tu Gimnasio</span> · Todos los derechos reservados</div>
+</footer>
+
+<script>
+  // Fallback handler for images that fail to load
+  document.querySelectorAll('.ex-img img').forEach(img => {
+    img.addEventListener('error', function() {
+      if (!this.dataset.fallbackTried) {
+        this.dataset.fallbackTried = 'true';
+        // Try alternative URL patterns
+        const src = this.src;
+        const filename = src.split('/').pop();
+        const baseName = filename.replace('.gif', '');
+        // Try different year/month combos
+        const alternatives = [
+          `https://fitnessprogramer.com/wp-content/uploads/2022/01/${baseName}.gif`,
+          `https://fitnessprogramer.com/wp-content/uploads/2021/06/${baseName}.gif`,
+          `https://fitnessprogramer.com/wp-content/uploads/2021/04/${baseName}.gif`,
+        ];
+        // Store them for sequential attempts
+        this.dataset.alternatives = JSON.stringify(alternatives);
+        this.dataset.altIndex = '0';
+        this.src = alternatives[0];
+      } else {
+        const alts = JSON.parse(this.dataset.alternatives || '[]');
+        let idx = parseInt(this.dataset.altIndex || '0') + 1;
+        if (idx < alts.length) {
+          this.dataset.altIndex = String(idx);
+          this.src = alts[idx];
+        } else {
+          // Final fallback: show a placeholder
+          this.parentElement.style.background = '#1a1a35';
+          this.style.display = 'none';
+          const ph = document.createElement('div');
+          ph.style.cssText = 'width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#555;font-size:11px;text-align:center;padding:8px;';
+          ph.textContent = '🏋️';
+          ph.style.fontSize = '32px';
+          this.parentElement.appendChild(ph);
+        }
+      }
+    });
+  });
+</script>
+
+<script src="https://www.genspark.ai/sandbox_inspect.js"></script></body>
+</html>
